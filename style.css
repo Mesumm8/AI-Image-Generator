@@ -1,5 +1,5 @@
-/* Importing Google Fonts - Inter */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playwrite+NZ+Basic:wght@100..400&family=Poppins:wght@300;400&display=swap');
+/* Importing Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:wght@300;400;600;700&display=swap');
 
 * {
     font-family: "Inter", sans-serif;
@@ -18,6 +18,17 @@
   --color-placeholder: #5C5A87;
   --color-border: #D4D4ED;
   --color-gradient: linear-gradient(135deg, #5C56E1, #8B5CF6);
+  --color-bg-gradient: linear-gradient(#E9E9FF, #C8C7FF);
+}
+
+/* Optional Dark Theme */
+html.dark {
+  --color-card: #1A1A24;
+  --color-input: #232333;
+  --color-text: #F1F1FF;
+  --color-placeholder: #8C8A9E;
+  --color-border: #2E2E42;
+  --color-bg-gradient: linear-gradient(#0F0E17, #1A192B);
 }
 
 body {
@@ -27,11 +38,12 @@ body {
     padding: 15px;
     min-height: 100vh;
     color: var(--color-text);
-    background: linear-gradient(#E9e9ff, #c8c7ff);
+    background: var(--color-bg-gradient);
 }
 
 .container {
     width: 900px;
+    max-width: 100%;
     position: relative;
     overflow: hidden;
     padding: 32px;
@@ -146,7 +158,7 @@ body {
     width: 35px;
     border: none;
     border-radius: 50%;
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     cursor: pointer;
     opacity: 0.8;
     color: #fff;
@@ -164,7 +176,7 @@ body {
 .main-content .prompt-actions {
     display: grid;
     gap: 14px;
-    grid-template-columns: repeat(3, 1fr) auto;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
     align-items: center;
 }
 
@@ -223,6 +235,7 @@ body {
     background: var(--color-gradient);
     cursor: pointer;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .prompt-actions .generate-btn:hover {
@@ -230,11 +243,11 @@ body {
     box-shadow: 0 4px 12px rgba(92, 86, 225, 0.3);
 }
 
-/* --- Inline Image Gallery (Strict Horizontal Row) --- */
+/* --- Inline Image Gallery --- */
 .main-content .gallery-grid {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     align-items: flex-start;
     justify-content: flex-start;
     gap: 20px;
@@ -245,10 +258,14 @@ body {
 }
 
 .gallery-grid .img-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: relative;
     width: 240px;
     height: 240px;
-    flex-shrink: 0 !important;
+    flex-shrink: 0;
     overflow: hidden;
     border-radius: 18px;
     background: var(--color-input);
@@ -270,12 +287,12 @@ body {
 
 /* --- Loading State --- */
 .gallery-grid .img-card:not(.loading) .status-container {
-    display: none; /* Hide status container when loading finishes */
+    display: none;
 }
 
 .gallery-grid .img-card.loading .result-img,
 .gallery-grid .img-card.loading .img-overlay {
-    display: none; /* Hide image and download button while loading */
+    display: none;
 }
 
 .gallery-grid .img-card.loading .status-container {
@@ -286,19 +303,29 @@ body {
     height: 100%;
     width: 100%;
     padding: 16px;
+    gap: 12px;
     text-align: center;
 }
 
-.gallery-grid .img-card .spinner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+.gallery-grid .img-card.loading .spinner {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 3px solid var(--color-border);
+    border-top-color: var(--color-primary);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .gallery-grid .img-card .status-text {
+    font-size: 0.85rem;
+    text-align: center;
     color: var(--color-placeholder);
-    font-size: 0.95rem;
     font-weight: 500;
 }
 
@@ -338,4 +365,11 @@ body {
 .gallery-grid .img-card .img-download-btn:hover {
     transform: scale(1.05);
     background: rgba(255, 255, 255, 0.4);
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    .prompt-actions {
+        grid-template-columns: 1fr;
+    }
 }
