@@ -251,10 +251,13 @@ body {
     align-items: flex-start;
     justify-content: flex-start;
     gap: 20px;
-    margin-top: 25px;
     width: 100%;
     overflow-x: auto;
     padding-bottom: 10px;
+}
+
+.main-content .gallery-grid:has(.img-card) {
+    margin-top: 30px;
 }
 
 .gallery-grid .img-card {
@@ -360,6 +363,12 @@ body {
     cursor: pointer;
     background: rgba(255, 255, 255, 0.25);
     transition: all 0.3s ease;
+}
+
+.gallery-grid .img-card .img-download-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .gallery-grid .img-card .img-download-btn:hover {
